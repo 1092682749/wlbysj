@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.dao.UserDao">
+    <resultMap id="associationMap" type="com.rain.domain.User">
+        <id column="u_id" property="id"/>
+        <result column="loginname" property="loginname"/>
+        <result column="password" property="password"/>
+        <result column="status" property="status"/>
+        <result column="createdate" property="create_date"/>
+        <result column="username" property="username"/>
+        <collection property="roles" column="u_id" ofType="com.rain.domain.Role">
+            <id column="r_id" property="id"/>
+            <result column="role_name" property="roleName"/>
+            <collection property="permissions" ofType="com.rain.domain.Permission" column="r_id">
+                <id column="p_id" property="id"/>
+                <result column="permission_name" property="permissionName"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findAllPermissionInfo" resultMap="associationMap" parameterType="int">
+        select u.id as u_id, u.loginname, u.password, u.status, u.createdate, u.username,
+        r.id as r_id, role_name,
+        p.id as p_id, p.permission_name
+        from user_inf u
+        left join user_role ur on u.id = ur.user_id
+        left join role r on ur.role_id = r.id
+        left join role_permission rp on r.id = rp.role_id
+        left join permission p on rp.permission_id = p.id
+        where u.id = #{id}
+    </select>
+</mapper>

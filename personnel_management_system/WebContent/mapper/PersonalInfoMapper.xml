@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rain.dao.PersonalInfoMapper">
+  <resultMap id="BaseResultMap" type="com.rain.domain.PersonalInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_no" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="birth_place" jdbcType="VARCHAR" property="birthPlace" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column=" graduate_school" jdbcType="VARCHAR" property="graduateSchool" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="e_mail" jdbcType="VARCHAR" property="eMail" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="superior" jdbcType="VARCHAR" property="superior" />
+    <result column="contract_period" jdbcType="DATE" property="contractPeriod" />
+    <result column="job_status" jdbcType="VARCHAR" property="jobStatus" />
+    <result column="work_experience" jdbcType="VARCHAR" property="workExperience" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="employee_picture" jdbcType="VARCHAR" property="employeePicture" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, employee_no, employee_name, gender, birth, birth_place, id_card, " graduate_school", 
+    education, e_mail, department, position, superior, contract_period, job_status, work_experience, 
+    remark, employee_picture, u_id
+  </sql>
+  <select id="selectByExample" parameterType="com.rain.domain.PersonalInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from personalInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from personalInfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from personalInfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.rain.domain.PersonalInfoExample">
+    delete from personalInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.rain.domain.PersonalInfo">
+    insert into personalInfo (id, employee_no, employee_name, 
+      gender, birth, birth_place, 
+      id_card, " graduate_school", education, 
+      e_mail, department, position, 
+      superior, contract_period, job_status, 
+      work_experience, remark, employee_picture, 
+      u_id)
+    values (#{id,jdbcType=INTEGER}, #{employeeNo,jdbcType=VARCHAR}, #{employeeName,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=CHAR}, #{birth,jdbcType=DATE}, #{birthPlace,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{graduateSchool,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{eMail,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{superior,jdbcType=VARCHAR}, #{contractPeriod,jdbcType=DATE}, #{jobStatus,jdbcType=VARCHAR}, 
+      #{workExperience,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{employeePicture,jdbcType=VARCHAR}, 
+      #{uId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rain.domain.PersonalInfo">
+    insert into personalInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employeeNo != null">
+        employee_no,
+      </if>
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="birthPlace != null">
+        birth_place,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="graduateSchool != null">
+        " graduate_school",
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="eMail != null">
+        e_mail,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="superior != null">
+        superior,
+      </if>
+      <if test="contractPeriod != null">
+        contract_period,
+      </if>
+      <if test="jobStatus != null">
+        job_status,
+      </if>
+      <if test="workExperience != null">
+        work_experience,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="employeePicture != null">
+        employee_picture,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="birthPlace != null">
+        #{birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSchool != null">
+        #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="superior != null">
+        #{superior,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPeriod != null">
+        #{contractPeriod,jdbcType=DATE},
+      </if>
+      <if test="jobStatus != null">
+        #{jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null">
+        #{workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePicture != null">
+        #{employeePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.rain.domain.PersonalInfoExample" resultType="java.lang.Long">
+    select count(*) from personalInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update personalInfo
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeNo != null">
+        employee_no = #{record.employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeName != null">
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=DATE},
+      </if>
+      <if test="record.birthPlace != null">
+        birth_place = #{record.birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCard != null">
+        id_card = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduateSchool != null">
+        " graduate_school" = #{record.graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null">
+        education = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eMail != null">
+        e_mail = #{record.eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null">
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superior != null">
+        superior = #{record.superior,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractPeriod != null">
+        contract_period = #{record.contractPeriod,jdbcType=DATE},
+      </if>
+      <if test="record.jobStatus != null">
+        job_status = #{record.jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workExperience != null">
+        work_experience = #{record.workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeePicture != null">
+        employee_picture = #{record.employeePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uId != null">
+        u_id = #{record.uId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update personalInfo
+    set id = #{record.id,jdbcType=INTEGER},
+      employee_no = #{record.employeeNo,jdbcType=VARCHAR},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=CHAR},
+      birth = #{record.birth,jdbcType=DATE},
+      birth_place = #{record.birthPlace,jdbcType=VARCHAR},
+      id_card = #{record.idCard,jdbcType=VARCHAR},
+      " graduate_school" = #{record.graduateSchool,jdbcType=VARCHAR},
+      education = #{record.education,jdbcType=VARCHAR},
+      e_mail = #{record.eMail,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      superior = #{record.superior,jdbcType=VARCHAR},
+      contract_period = #{record.contractPeriod,jdbcType=DATE},
+      job_status = #{record.jobStatus,jdbcType=VARCHAR},
+      work_experience = #{record.workExperience,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      employee_picture = #{record.employeePicture,jdbcType=VARCHAR},
+      u_id = #{record.uId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rain.domain.PersonalInfo">
+    update personalInfo
+    <set>
+      <if test="employeeNo != null">
+        employee_no = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="birthPlace != null">
+        birth_place = #{birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSchool != null">
+        " graduate_school" = #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        e_mail = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="superior != null">
+        superior = #{superior,jdbcType=VARCHAR},
+      </if>
+      <if test="contractPeriod != null">
+        contract_period = #{contractPeriod,jdbcType=DATE},
+      </if>
+      <if test="jobStatus != null">
+        job_status = #{jobStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null">
+        work_experience = #{workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePicture != null">
+        employee_picture = #{employeePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rain.domain.PersonalInfo">
+    update personalInfo
+    set employee_no = #{employeeNo,jdbcType=VARCHAR},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      birth = #{birth,jdbcType=DATE},
+      birth_place = #{birthPlace,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      " graduate_school" = #{graduateSchool,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      e_mail = #{eMail,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      superior = #{superior,jdbcType=VARCHAR},
+      contract_period = #{contractPeriod,jdbcType=DATE},
+      job_status = #{jobStatus,jdbcType=VARCHAR},
+      work_experience = #{workExperience,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      employee_picture = #{employeePicture,jdbcType=VARCHAR},
+      u_id = #{uId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findById" parameterType="int" resultType="com.rain.domain.PersonalInfo">
+    select * from personalInfo where id = #{id}
+  </select>
+</mapper>
